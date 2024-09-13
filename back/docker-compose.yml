@@ -1,0 +1,12 @@
+services:
+  mysqldb:
+    image: mysql:8.0.35
+    container_name: db_rifa
+    expose:
+        - '3306'
+    ports:
+        - '3306:3306'
+    volumes:
+        - ./data:/var/lib/mysql 
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
