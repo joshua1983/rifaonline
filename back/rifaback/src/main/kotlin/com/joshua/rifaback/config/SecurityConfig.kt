@@ -26,7 +26,7 @@ class SecurityConfig(
          .csrf { csrf -> csrf.disable() }
          .authorizeHttpRequests { authorizeRequests ->
             authorizeRequests
-               .requestMatchers("/registro", "/login", "/board", "/transaction").permitAll()
+               .requestMatchers("/registro", "/login", "/board", "/transaction", "/cells").permitAll()
                .anyRequest().authenticated()
          }
          .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

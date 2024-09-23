@@ -1,7 +1,9 @@
 package com.joshua.rifaback.controller
 
 import com.joshua.rifaback.data.Cell
-import com.joshua.rifaback.data.User
+import com.joshua.rifaback.data.SimplyCell
+import com.joshua.rifaback.data.TransactionRequest
+import com.joshua.rifaback.data.UserClient
 import com.joshua.rifaback.services.TransactionService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -17,13 +19,12 @@ class TransactionController(
 
    @PostMapping("/transaction")
    fun createNewTransaction(
-      @RequestBody cell: Cell,
-      @RequestBody user: User
+      @RequestBody transaction: TransactionRequest
    ): ResponseEntity<Any?> {
       try {
          val transactionStatus = transactionService.recordNewTransaction(
-            cell = cell,
-            user = user
+            cell = transaction.cell,
+            user = transaction.user
          )
          return ResponseEntity.ok().body(transactionStatus)
       } catch (ex: Exception) {

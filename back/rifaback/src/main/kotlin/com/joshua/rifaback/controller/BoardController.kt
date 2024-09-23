@@ -21,17 +21,26 @@ class BoardController (
 ) {
 
    @GetMapping("/board")
-   fun getBoardFromUserEmail(@RequestParam(value = "email", required = true) email: String): ResponseEntity<Any> {
+   fun getBoardFromUserEmail(@RequestParam(value = "id", required = true) id: Int): ResponseEntity<Any> {
       try {
-         val board = boardFactory.getBoard(email)
+         val board = boardFactory.getBoard(id)
          return ResponseEntity.status(HttpStatus.OK).body(board)
       } catch (ex: Exception) {
          return ResponseEntity.badRequest().body(ex.message!!)
       }
    }
 
+   @GetMapping("/cells")
+   fun getBoardFromId(@RequestParam(value = "boardid") id: Long): ResponseEntity<Any> {
+      try{
+         val cells = boardFactory.getCellsFromBoard(id)
+         return ResponseEntity.status(HttpStatus.OK).body(cells)
+      } catch (ex: Exception) {
+         return ResponseEntity.badRequest().body(ex.message!!)
+      }
+   }
+
    @PostMapping("/board")
-   @PreAuthorize("hasRole('ADMIN')")
    fun createNewBoard(
       @RequestBody requestBoard: NewBoard): ResponseEntity<Any> {
       try {

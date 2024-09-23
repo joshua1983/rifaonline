@@ -1,6 +1,7 @@
 import React from 'react'
-import EtiquetaConLinea from './formItem';
-const Derecha = ({numero}) => {
+import EtiquetaConLinea from './labelItem';
+import PropTypes from 'prop-types';
+const Derecha = ({ numero, formData }) => {
     const textStyle = {
         textAlign: 'center',
         fontFamily: 'Poppins, sans-serif',
@@ -28,14 +29,18 @@ const Derecha = ({numero}) => {
             <div style={textStyle}>EL SORTEO SE REALIZARÁ EL 27 DE SEPTIEMBRE CON LAS DOS ULTIMAS CIFRAS DE LA LOTERIA DE SANTANDER</div>
             <div style={pinkBackgroundStyle}>
                 <h1 style={titleStyle}>#{numero}</h1>
-                <EtiquetaConLinea label="Nombre: " content="Juan Perez" color="white" />
-                <EtiquetaConLinea label="Correo: " content="juanperez@gmail.com" color="white" />
-                <EtiquetaConLinea label="Teléfono: " content="1234567890" color="white" />
-                <EtiquetaConLinea label="Dirección: " content="Calle 123, Ciudad 456, País 789" color="white" />
+                <EtiquetaConLinea label="Nombre: " content={formData.nombre} color="white" />
+                <EtiquetaConLinea label="Teléfono: " content={formData.telefono} color="white" />
+                <EtiquetaConLinea label="Dirección: " content={formData.direccion} color="white" />
             </div>
             <div style={textStyle}>BOLETA SIN CANCELAR NO JUEGA</div>
         </>
     )
+}
+
+Derecha.propTypes = {
+    numero: PropTypes.number.isRequired,
+    formData: PropTypes.object.isRequired
 }
 
 export default Derecha

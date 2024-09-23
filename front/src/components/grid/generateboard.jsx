@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getBoard } from '../../services/getBoard';
+import { getBoard } from '../../services/board';
 import { Grid2, Paper, Typography } from '@mui/material';
 import Centro from './ticket/centro';
 import { useNavigate } from 'react-router-dom';
@@ -11,8 +11,8 @@ function GenerateBoard() {
     }, []);
     if (!data) return <div>Cargando...</div>;
     if (data.board === null) return <div>No hay datos</div>;
-    const loadBoleta = (itemID) => {
-        navigate(`/boleta/${itemID}`);
+    const loadBoleta = (item) => {
+        navigate('/boleta', { state: { item } });
     }
     return (
         <>
@@ -21,7 +21,7 @@ function GenerateBoard() {
             <Grid2 container spacing={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '10px' }}>
                 {data.cells.map((item, index) => (
                     <Grid2 xs={6} key={index} >
-                        <Paper elevation={3} sx={{ p: 1, height: '70%', backgroundColor: getStatusStyle(item.status) }} onClick={() => loadBoleta(item.id)}>
+                        <Paper elevation={3} sx={{ p: 1, height: '70%', backgroundColor: getStatusStyle(item.status) }} onClick={() => loadBoleta(item)}>
                             <Typography variant="h4" style={{ textAlign: 'center' }}>{item.numberCell}</Typography>
                             <Typography style={{ textAlign: 'center', fontFamily: 'Poppins, sans-serif', fontSize: '.7em', fontWeight: 'bold' }}>
                                 {getTextStatus(item.status)}

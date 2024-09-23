@@ -1,7 +1,13 @@
-import React from 'react'
-import EtiquetaConLinea from './formItem';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Izquierda = ({numero}) => {
+const Izquierda = ({ item, onFormDataChange }) => {
+    const [inputValues, setInputValues] = useState({
+        nombre: '',
+        correo: '',
+        telefono: '',
+        direccion: ''
+    });
     const dividerStyle = {
         width: '100%',
         height: '2px',
@@ -14,17 +20,54 @@ const Izquierda = ({numero}) => {
         textAlign: 'center',
         fontFamily: 'Poppins, sans-serif'
     };
+    const fontStyleControl = {
+        fontFamily: 'Poppins, sans-serif',
+        fontSize: '1.2em',
+        display: 'block',
+        color: 'pink'
+    };
+    const contentStyleControl = {
+        fontFamily: 'Poppins, sans-serif',
+        fontSize: '1.2em',
+        display: 'block',
+        color: 'black',
+        width: '98%',
+        height: '19px',
+        marginTop: '5px'
+    };
+    const handleChange = (e) => {
+        setInputValues({ ...inputValues, [e.target.name]: e.target.value });
+        onFormDataChange(inputValues);
+    }
     return (
         <div>
-            <h1 style={titleStyle}>#{numero}</h1>
+            <h1 style={titleStyle}>#{item.numberCell}</h1>
             <div style={dividerStyle} />
             <br />
-            <EtiquetaConLinea label="Nombre: " content="Juan Perez" color="pink" colorContent="black" />
-            <EtiquetaConLinea label="Correo: " content="juanperez@gmail.com" color="pink" colorContent="black" />
-            <EtiquetaConLinea label="Teléfono: " content="1234567890" color="pink" colorContent="black" />
-            <EtiquetaConLinea label="Dirección: " content="Calle 123, Ciudad 456, País 789" color="pink" colorContent="black" />
+
+            <div style={{ textAlign: 'left' }}>
+                <label style={fontStyleControl}>Nombre</label>
+                <input type='text' style={contentStyleControl} onChange={handleChange} name='nombre' value={inputValues.nombre}></input>
+                <div style={{ width: '100%', height: '2px', backgroundColor: 'pink', marginTop: '5px' }} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+                <label style={fontStyleControl}>Direccion</label>
+                <input type='text' style={contentStyleControl} onChange={handleChange} name='direccion' value={inputValues.direccion}></input>
+                <div style={{ width: '100%', height: '2px', backgroundColor: 'pink', marginTop: '5px' }} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+                <label style={fontStyleControl}>Telefono</label>
+                <input type='text' style={contentStyleControl} onChange={handleChange} name='telefono' value={inputValues.telefono}></input>
+                <div style={{ width: '100%', height: '2px', backgroundColor: 'pink', marginTop: '5px' }} />
+            </div>
+
         </div>
     )
+}
+
+Izquierda.propTypes = {
+    item: PropTypes.object.isRequired,
+    onFormDataChange: PropTypes.func.isRequired
 }
 
 export default Izquierda

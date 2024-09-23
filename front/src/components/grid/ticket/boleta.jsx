@@ -1,9 +1,25 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom';
 import Izquierda from './izquierda'
 import Centro from './centro'
 import Derecha from './derecha'
 import Comprar from './comprar'
-const Boleta = ({numero}) => {
+import { useState } from 'react'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+const Boleta = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { item } = location.state;
+    const [formData, setFormData] = useState({
+        nombre: '',
+        correo: '',
+        telefono: '',
+        direccion: ''
+    });
+    const handleChange = (data) => {
+        setFormData(data);
+    }
     const lineStyle = {
         marginTop: '20px',
         width: '100%',
@@ -14,14 +30,19 @@ const Boleta = ({numero}) => {
         backgroundRepeat: 'repeat-x'
 
     };
+    const handleVolver = () => {
+        navigate(`/main`);
+    }
+    
     return (
         <div>
-            <Izquierda numero={numero} />
+            <Comprar boleta={item} formData={formData} />
+            <Button onClick={handleVolver}>Volver</Button>
+            <Izquierda item={item} onFormDataChange={handleChange} />
             <div style={lineStyle} />
             <Centro />
             <div style={lineStyle} />
-            <Derecha numero={numero} />
-            <Comprar />
+            <Derecha numero={item.numberCell} formData={formData} />
         </div>
     )
 }

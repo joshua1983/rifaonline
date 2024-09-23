@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { BottomNavigation, BottomNavigationAction } from '@mui/material'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -14,10 +13,12 @@ function Header() {
         localStorage.removeItem('email')
         navigate('/')
     }
+    function isLogged() {
+        return email !== null
+    }
 
     function renderLogout() {
-        console.log(location.pathname)
-        if (location.pathname !== '/' && email !== null) {
+        if (isLogged()) {
             return (
                 <BottomNavigationAction onClick={logout} label="Salir" icon={<ExitToAppIcon />} />
             )
